@@ -27,7 +27,7 @@ jobs:
       - name: Run a one-line script
         run: |
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-          echo "export PATH=$PATH:/Users/runner/work/flutter_engine/flutter_engine" ~/.bash_profile
+          echo "export PATH=$PATH:/Users/runner/work/flutter_engine/flutter_engine/depot_tools" ~/.bash_profile
           source ~/.bash_profile
           brew install ant
           brew install ninja
