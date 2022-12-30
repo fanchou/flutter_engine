@@ -23,15 +23,38 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Initialize depot_tools
+        run: |
+          git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git --depth 1
+      
+      - name: Configure gclient
+        run: |
+          mkdir engine
+          cat <<- EOF > engine/.gclient
+          solutions = [
+            {
+              "managed": False,
+              "name": "src/flutter",
+              "url": "git@github.com:Iyxan23/flutter-engine.git",
+              "custom_deps": {},
+              "deps_file": "DEPS",
+              "safesync_url": "",
+            },
+          ]
+          EOF
+      
+      - name: Update dependencies
+        run: |
+          cd engine
+          ../depot_tools/gclient sync
+
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-          git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-          echo "export PATH=$PATH:/Users/runner/work/flutter_engine/flutter_engine/depot_tools" ~/.bash_profile
-          source ~/.bash_profile
           brew install ant
           brew install ninja
-          gclient sync --verbose
+          
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
