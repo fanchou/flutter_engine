@@ -46,7 +46,7 @@ jobs:
       - name: Update dependencies
         run: |
           cd engine
-          ../depot_tools/gclient sync
+          ../depot_tools/gclient sync --verbose
 
 
       # Runs a single command using the runners shell
